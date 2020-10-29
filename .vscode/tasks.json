@@ -6,7 +6,7 @@
         {
             "label": "compile & run",
             "type": "shell",
-            "command": "sh bin/compile.sh; sh bin/run.sh test",
+            "command": "sh bin/compile.sh; sh bin/run.sh mail",
             "problemMatcher": [],
             "group": {
                 "kind": "build",

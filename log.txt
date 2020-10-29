@@ -1,0 +1,6 @@
+Order 1 completed. Price: $0.60
+Order 2 completed. Price: $0.60
+Order 3 completed. Price: $0.60
+Order 4 completed. Price: $0.60
+Order 5 completed. Price: $0.60
+Order 6 completed. Price: $0.60

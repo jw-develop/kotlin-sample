@@ -1,6 +1,20 @@
 package orders
 
+import java.io.File
+import java.io.FileWriter
+import java.util.Scanner
+
+// -----------------------------------------------------------------------------
+// Ordering Service
+// -----------------------------------------------------------------------------
 fun order(fruits: Array<String>): String {	
+	val writer = FileWriter("log.txt",true)
+	val scanner = Scanner(File("log.txt"))
+	val scannerLines = ArrayList<String>()
+	while (scanner.hasNextLine()) {
+		scannerLines.add(scanner.nextLine())
+	}
+	val id = scannerLines.size
 	var dollars: Double = 0.0
 
 	// Count apples and oranges
@@ -17,17 +31,47 @@ fun order(fruits: Array<String>): String {
 	dollars += (((oranges / 3) * 2) + oranges % 3) * .25
 	
 	val toReturn = "\$%.2f".format(dollars)
+	writer.write("Order " + id + " completed. Price: " + toReturn + " Delivery time: 15 minutes" + "\n")
+	writer.close()
+	scanner.close()
 	return toReturn
 }
 
-fun main(args: Array<String>) {
-	if (args.contains("test")) {
-		runTests()
-	} else {
-		println(order(args))
+// -----------------------------------------------------------------------------
+// Mail Service
+// -----------------------------------------------------------------------------
+fun mail() {
+	var scanner = Scanner(File("log.txt"))
+	var offset = 0
+	while (scanner.hasNextLine()) {
+		scanner.nextLine()
+		offset++
+	}
+	println("Listening for new orders to complete.")
+	while(true) {
+		scanner = Scanner(File("log.txt"))
+		var newOffset = 0
+		while (scanner.hasNextLine()) {
+			scanner.nextLine()
+			newOffset++
+		}
+		scanner.close()
+		if (offset < newOffset) {
+			scanner = Scanner(File("log.txt"))
+			var current = 0
+			while (current < offset && scanner.hasNextLine()) scanner.nextLine()
+			while (offset < newOffset && scanner.hasNextLine()) {
+				println(scanner.nextLine())
+			}
+			scanner.close()
+		}
 	}
 }
 
+
+// -----------------------------------------------------------------------------
+// Testing
+// -----------------------------------------------------------------------------
 fun test(name: String,expected: String, result: String): Int {
 	if (!expected.equals(result)) {
 		println(name + " test failed!")
@@ -54,4 +98,14 @@ fun runTests() {
 
 	if (passed == 4)
 		println("All tests passed.")
+}
+
+fun main(args: Array<String>) {
+	if (args.contains("test")) {
+		runTests()
+	} else if (args.contains("mail")) {
+		mail()
+	} else {
+		println(order(args))
+	}
 }
