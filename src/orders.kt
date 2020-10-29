@@ -7,7 +7,9 @@ import java.util.Scanner
 // -----------------------------------------------------------------------------
 // Ordering Service
 // -----------------------------------------------------------------------------
-fun order(fruits: Array<String>): String {	
+fun order(fruits: Array<String>): String {
+
+	// Getting current stock of apples and oranges.
 	val stockScanner = Scanner(File("stock.txt"))
 	var appleStock = 0
 	var orangeStock = 0
@@ -21,6 +23,8 @@ fun order(fruits: Array<String>): String {
 				orangeStock = words[1].toInt()
 		}
 	}
+
+	// Getting # of lines in log.txt
 	val writer = FileWriter("log.txt",true)
 	val scanner = Scanner(File("log.txt"))
 	val scannerLines = ArrayList<String>()
@@ -28,8 +32,7 @@ fun order(fruits: Array<String>): String {
 		scannerLines.add(scanner.nextLine())
 	}
 	val id = scannerLines.size
-	var dollars: Double = 0.0
-
+	
 	// Count apples and oranges
 	var apples = 0
 	var oranges = 0
@@ -43,17 +46,19 @@ fun order(fruits: Array<String>): String {
 			orangeStock--
 		}
 	}
-
-
+	
+	// Calculate cost
+	var dollars: Double = 0.0
 	dollars += ((apples / 2) + apples % 2) * .6
 	dollars += (((oranges / 3) * 2) + oranges % 3) * .25
 	var toReturn = "\$%.2f".format(dollars)
+
+	// Check if out of stock
 	if (orangeStock < 0 || appleStock < 0) {
 		toReturn = "Order " + id + " failed. Fruit Shortage."
 		writer.write(toReturn)
 	} else {
 		writer.write("Order " + id + " completed. Price: " + toReturn + ". Delivery time: 15 minutes" + "\n")
-
 		val stockWriter = FileWriter("stock.txt",false)
 		stockWriter.write("apples:" + appleStock + "\noranges:" + orangeStock)
 		stockWriter.close()
@@ -74,7 +79,7 @@ fun mail() {
 		offset++
 	}
 	println("Listening for new orders to complete.")
-	while(true) {
+	while(true) { // Always checking for new messages.
 		scanner = Scanner(File("log.txt"))
 		var newOffset = 0
 		while (scanner.hasNextLine()) {
@@ -82,6 +87,8 @@ fun mail() {
 			newOffset++
 		}
 		scanner.close()
+
+		// If the file is of a different length, print out the latest messages.
 		if (offset < newOffset) {
 			scanner = Scanner(File("log.txt"))
 			var current = 0
