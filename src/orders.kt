@@ -5,9 +5,9 @@ fun order(fruits: Array<String>): String {
 	
 	fruits.forEach {
 		if (it == "Apple")
-			dollars += .25
-		else if (it == "Orange")
 			dollars += .6
+		else if (it == "Orange")
+			dollars += .25
 	}
 
 	val toReturn = "\$%.2f".format(dollars)
@@ -22,21 +22,27 @@ fun main(args: Array<String>) {
 	}
 }
 
-fun test(name: String,expected: String, result: String) {
+fun test(name: String,expected: String, result: String): Int {
 	if (!expected.equals(result)) {
 		println(name + " test failed!")
 		println("Expected: " + expected)
 		println("Result: " + result + '\n')
+		return 0
 	}
+	return 1
 }
 
 fun runTests() {
+	var passed = 0
 	var fruits: Array<String> = arrayOf()
-	test("No Fruit :(","$0.00",order(fruits))
+	passed += test("No Fruit :(","$0.00",order(fruits))
 
 	fruits = arrayOf("Apple")
-	test("One Apple","$0.25",order(fruits))
+	passed += test("One Apple","$0.60",order(fruits))
 
 	fruits = arrayOf("Apple","Apple","Orange")
-	test("Three Fruit","$1.10",order(fruits))
+	passed += test("Three Fruit","$1.45",order(fruits))
+
+	if (passed == 3)
+		println("All tests passed.")
 }
