@@ -1,5 +1,7 @@
 # Kotlin Sample
 
+A CLI for buying Apples and Oranges.
+
 ## Usage
 `bin/compile.sh` compiles the code to the build/ folder.
 
