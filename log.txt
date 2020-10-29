@@ -4,3 +4,12 @@ Order 3 completed. Price: $0.60
 Order 4 completed. Price: $0.60
 Order 5 completed. Price: $0.60
 Order 6 completed. Price: $0.60
+Order 6 completed. Price: $0.60
+Order 7 completed. Price: $0.60 Delivery time: 15 minutes
+Order 8 completed. Price: $0.60 Delivery time: 15 minutes
+Order 9 completed. Price: $0.60 Delivery time: 15 minutes
+Order 10 failed. Fruit Shortage.Order 11 failed. Fruit Shortage.Order 11 completed. Price: $0.60. Delivery time: 15 minutes
+Order 11 completed. Price: $0.00. Delivery time: 15 minutes
+Order 12 completed. Price: $0.60. Delivery time: 15 minutes
+Order 13 completed. Price: $0.85. Delivery time: 15 minutes
+Order 14 completed. Price: $1.95. Delivery time: 15 minutes

@@ -1,2 +1,2 @@
-apples:
-oranges:
+apples:3
+oranges:5

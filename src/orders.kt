@@ -8,6 +8,19 @@ import java.util.Scanner
 // Ordering Service
 // -----------------------------------------------------------------------------
 fun order(fruits: Array<String>): String {	
+	val stockScanner = Scanner(File("stock.txt"))
+	var appleStock = 0
+	var orangeStock = 0
+	while (stockScanner.hasNextLine()) {
+		val line = stockScanner.nextLine()
+		val words = line.split(":")
+		if (words.size > 1) {
+			if (words[0] == "apples")
+				appleStock = words[1].toInt()
+			if (words[0] == "oranges")
+				orangeStock = words[1].toInt()
+		}
+	}
 	val writer = FileWriter("log.txt",true)
 	val scanner = Scanner(File("log.txt"))
 	val scannerLines = ArrayList<String>()
@@ -21,17 +34,30 @@ fun order(fruits: Array<String>): String {
 	var apples = 0
 	var oranges = 0
 	fruits.forEach {
-		if (it == "Apple")
+		if (it == "Apple") {
 			apples += 1
-		else if (it == "Orange")
+			appleStock--
+		}
+		else if (it == "Orange") {
 			oranges += 1
+			orangeStock--
+		}
 	}
+
 
 	dollars += ((apples / 2) + apples % 2) * .6
 	dollars += (((oranges / 3) * 2) + oranges % 3) * .25
-	
-	val toReturn = "\$%.2f".format(dollars)
-	writer.write("Order " + id + " completed. Price: " + toReturn + " Delivery time: 15 minutes" + "\n")
+	var toReturn = "\$%.2f".format(dollars)
+	if (orangeStock < 0 || appleStock < 0) {
+		toReturn = "Order " + id + " failed. Fruit Shortage."
+		writer.write(toReturn)
+	} else {
+		writer.write("Order " + id + " completed. Price: " + toReturn + ". Delivery time: 15 minutes" + "\n")
+
+		val stockWriter = FileWriter("stock.txt",false)
+		stockWriter.write("apples:" + appleStock + "\noranges:" + orangeStock)
+		stockWriter.close()
+	}
 	writer.close()
 	scanner.close()
 	return toReturn

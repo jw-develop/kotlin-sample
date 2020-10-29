@@ -6,7 +6,7 @@
         {
             "label": "compile & run",
             "type": "shell",
-            "command": "sh bin/compile.sh; sh bin/run.sh mail",
+            "command": "sh bin/compile.sh; sh bin/order.sh Apple",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
