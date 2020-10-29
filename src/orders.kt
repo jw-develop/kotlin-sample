@@ -116,6 +116,11 @@ fun test(name: String,expected: String, result: String): Int {
 }
 
 fun runTests() {
+	// restock
+	val stockWriter = FileWriter("stock.txt",false)
+	stockWriter.write("apples:" + 10 + "\noranges:" + 10)
+	stockWriter.close()
+
 	var passed = 0
 	var fruits: Array<String> = arrayOf()
 	passed += test("No Fruit :(","$0.00",order(fruits))
