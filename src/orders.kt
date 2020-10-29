@@ -1,15 +1,21 @@
 package orders
 
-fun order(fruits: Array<String>): String {
+fun order(fruits: Array<String>): String {	
 	var dollars: Double = 0.0
-	
+
+	// Count apples and oranges
+	var apples = 0
+	var oranges = 0
 	fruits.forEach {
 		if (it == "Apple")
-			dollars += .6
+			apples += 1
 		else if (it == "Orange")
-			dollars += .25
+			oranges += 1
 	}
 
+	dollars += ((apples / 2) + apples % 2) * .6
+	dollars += (((oranges / 3) * 2) + oranges % 3) * .25
+	
 	val toReturn = "\$%.2f".format(dollars)
 	return toReturn
 }
@@ -41,8 +47,11 @@ fun runTests() {
 	passed += test("One Apple","$0.60",order(fruits))
 
 	fruits = arrayOf("Apple","Apple","Orange")
-	passed += test("Three Fruit","$1.45",order(fruits))
+	passed += test("Three Fruit","$0.85",order(fruits))
 
-	if (passed == 3)
+	fruits = arrayOf("Apple","Apple","Apple","Orange","Orange","Orange","Orange")
+	passed += test("Basket of 3 apples, 4 oranges","$1.95",order(fruits))
+
+	if (passed == 4)
 		println("All tests passed.")
 }
